@@ -12,7 +12,7 @@ function setColor(pos) {
 
 
 const speed = 1
-const ANGLE_CHANGE_SCALE = 0.0005// Intensity of angle changes for all vectors
+const ANGLE_CHANGE_SCALE = 0.005// Intensity of angle changes for all vectors
 var vectors = []
 
 
@@ -23,7 +23,7 @@ function setup() {
   noiseDetail(1)
   
   // Grid params
-  var density = 100
+  var density = 50
   var spacing = windowWidth / density
   var idx = 0
 
@@ -42,12 +42,20 @@ function draw() {
   
   for(let i = 0; i < vectors.length; i++) {
     let v = vectors[i]
-    let mouse = createVector(mouseX, mouseY)
-    let angle = map(noise(v.pos.x*ANGLE_CHANGE_SCALE, v.pos.y*ANGLE_CHANGE_SCALE), 0, 1, 0, 720)
-    let angle_mouse = atan2(v.pos.y - mouseY, v.pos.x - mouseX) * 180 / PI
     
-    v.pos.add(createVector(cos(angle), sin(angle)))
-    v.pos.add(createVector(cos(angle_mouse), sin(angle_mouse)))
+    // Angle between Perlin noise field and vector
+    let angle = map(noise(v.pos.x*ANGLE_CHANGE_SCALE, v.pos.y*ANGLE_CHANGE_SCALE), 0, 1, 0, 720)
+    // Angle between vector and mouse
+    let angle_mouse = atan2((v.pos.y - mouseY), (v.pos.x - mouseX)) * 180 / PI 
+    
+    let field_force = createVector(cos(angle), sin(angle))
+    let mouse_force = createVector(cos(angle_mouse), sin(angle_mouse))
+    
+    // Apply the force here to vector
+    mouse_force = mouse_force.add(mouse_force)
+    
+    v.pos.add(mouse_force)
+    
     setColor(v.pos)
     if (v.done()) v.restart(windowWidth, windowHeight)
     v.show()
