@@ -45,6 +45,7 @@ function draw() {
     // Angle between Perlin noise field and vector
     let angle = map(noise(v.pos.x*ANGLE_CHANGE_SCALE, v.pos.y*ANGLE_CHANGE_SCALE), 0, 1, 0, 720)
     // Angle between vector and mouse
+    
     let angle_mouse = atan2((v.pos.y - mouseY), (v.pos.x - mouseX)) * 180 / TWO_PI 
     
     let field_force = createVector(cos(angle), sin(angle))
@@ -52,10 +53,8 @@ function draw() {
 
     // Apply the force here to vector
     let dist_mouse = v.pos.dist(mouse_force)
-
     let dist_field = v.pos.dist(field_force)
 
-    // Scale force based on distance
     v.pos.add(mouse_force)
     
     
@@ -64,23 +63,3 @@ function draw() {
     v.show()
   }
 }
-
-
-/*
-
-for(let i = 0; i < vectors.length; i++) {
-    let v = vectors[i]
-    
-    let n = noise(v.pos.x * NOISE_SCALE, v.pos.y * NOISE_SCALE)
-    n = TWO_PI * n 
-
-    // Update vector
-    v.followField(n)
-    v.followMouse(mouseX, mouseY)
-    if (v.done(windowWidth, windowHeight)) {
-      v.restart(windowWidth, windowHeight)
-    }
-    v.show()
-  }
-
-*/
