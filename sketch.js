@@ -2,44 +2,54 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-function checkBounds(vector) {
-  return vector.x >= 0 && vector.x <= windowWidth && vector.y >= 0 && v.y <= windowHeight
+function setColor(pos) {
+  let r = map(pos.x, 0, windowWidth, 50, 255)
+  let g = map(pos.y, 0, windowHeight, 255, 50)
+  let b = map(pos.x, 0, windowWidth, 50, 255)
+  fill(r,g,b)
+
 }
 
-const NOISE_SCALE = 0.005// Keep noise under control
+
 const speed = 1
-var vectors = new Array(MAX_VECTOR_AMT)
-var MAX_VECTOR_AMT = 100
+const ANGLE_CHANGE_SCALE = 0.01// Intensity of angle changes for all vectors
+var vectors = []
+
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  background(30);
+  background(35);
+  angleMode(DEGREES)
+  noiseDetail(1)
   
   // Grid params
-  var density = 50
+  var density = 100
   var spacing = windowWidth / density
   var idx = 0
 
   // Init vectors and grid
   for(let x = 0; x < windowWidth; x += spacing) {
     for(let y = 0; y < windowHeight; y += spacing) {
-      vectors[idx] = new Vector(x, y)
-      idx += 1
+      vectors.push(new Vector(random(windowWidth), random(windowHeight)))
+      
     }
   }
 }
 
 function draw() {
-  
-
-  
+  background(20, 20)
   noStroke()
-  fill(255)
+  
   for(let i = 0; i < vectors.length; i++) {
     let v = vectors[i]
-
-    let angle = map(noise(v.pos.x, v.pos.y), 0, 1, 0, 720)
+    let mouse = createVector(mouseX, mouseY)
+    let angle = map(noise(v.pos.x*ANGLE_CHANGE_SCALE, v.pos.y*ANGLE_CHANGE_SCALE), 0, 1, 0, 720)
+    let angle_mouse = atan2(v.pos.y - mouseY, v.pos.x - mouseX) * 180 / PI
+    
     v.pos.add(createVector(cos(angle), sin(angle)))
+    v.pos.add(createVector(cos(angle_mouse), sin(angle_mouse)))
+    setColor(v.pos)
+    if (v.done()) v.restart(windowWidth, windowHeight)
     v.show()
   }
 }
