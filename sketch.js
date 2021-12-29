@@ -12,7 +12,7 @@ function setColor(pos) {
 
 
 const speed = 1
-const ANGLE_CHANGE_SCALE = 0.01// Intensity of angle changes for all vectors
+const ANGLE_CHANGE_SCALE = 0.0005// Intensity of angle changes for all vectors
 var vectors = []
 
 
