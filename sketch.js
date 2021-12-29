@@ -45,7 +45,7 @@ function draw() {
     // Angle between Perlin noise field and vector
     let angle = map(noise(v.pos.x*ANGLE_CHANGE_SCALE, v.pos.y*ANGLE_CHANGE_SCALE), 0, 1, 0, 720)
     // Angle between vector and mouse
-    let angle_mouse = atan2((v.pos.y - mouseY), (v.pos.x - mouseX)) * 180 / PI 
+    let angle_mouse = atan2((v.pos.y - mouseY), (v.pos.x - mouseX)) * 180 / TWO_PI 
     
     let field_force = createVector(cos(angle), sin(angle))
     let mouse_force = createVector(cos(angle_mouse), sin(angle_mouse))
