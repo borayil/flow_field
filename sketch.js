@@ -25,7 +25,6 @@ function setup() {
   // Grid params
   var density = 50
   var spacing = windowWidth / density
-  var idx = 0
 
   // Init vectors and grid
   for(let x = 0; x < windowWidth; x += spacing) {
@@ -50,11 +49,15 @@ function draw() {
     
     let field_force = createVector(cos(angle), sin(angle))
     let mouse_force = createVector(cos(angle_mouse), sin(angle_mouse))
-    
+
     // Apply the force here to vector
-    mouse_force = mouse_force.add(mouse_force)
-    
+    let dist_mouse = v.pos.dist(mouse_force)
+
+    let dist_field = v.pos.dist(field_force)
+
+    // Scale force based on distance
     v.pos.add(mouse_force)
+    
     
     setColor(v.pos)
     if (v.done()) v.restart(windowWidth, windowHeight)
