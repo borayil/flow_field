@@ -1,5 +1,5 @@
 const MIN_LIFESPAN = 10
-const MAX_LIFESPAN = 50
+const MAX_LIFESPAN = 100
 
 
 function Vector(x, y) {

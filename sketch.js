@@ -21,14 +21,37 @@ function lifespanWeight(v) {
   else {
       return map(v.lifespan, MAX_LIFESPAN / 2, MAX_LIFESPAN, 1000, 0)
   }
+}
 
-  
+var timestamp = null
+var changeAfter = 10000 // change angle alternation after x seconds
+var ascending = true
+function alternateAngleChangeScale() {
+  if (timestamp == null) {
+    timestamp = changeAfter
+  }
+  /*
+  if (angle_change_scale >= max_acs || angle_change_scale <= min_acs) {
+    ascending = !ascending 
+  }
+  */
+  if (ascending) {
+    angle_change_scale += 0.000000001
+  } else {
+    angle_change_scale -= 0.000000001
+  }
+  if (millis() >= changeAfter) {
+    ascending = !ascending
+    changeAfter *= 2
+  }
 }
 
 
 
 const speed = 1
-var angle_change_scale = 0.0045// Intensity of angle changes for all vectors
+var min_acs = 0.0005
+var max_acs = 0.8000
+var angle_change_scale = 0.003// Intensity of angle changes for all vectors
 var vectors = []
 
 
@@ -37,11 +60,11 @@ function setup() {
   background(35);
   angleMode(DEGREES)
   noiseDetail(0.05)
-  strokeWeight(1.5)
+  strokeWeight(2)
 
   
   // Grid params
-  var density = 100
+  var density = windowWidth / 20
   var spacing = windowWidth / density
 
   // Init vectors and grid
@@ -67,7 +90,8 @@ function draw() {
    
     // To make the field itself move, alternate this scale
    
-    angle_change_scale -= 0.0000000005
+    
+    alternateAngleChangeScale()
     
     let field_force = createVector(cos(angle), sin(angle))
     v.pos.add(field_force)
