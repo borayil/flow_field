@@ -4,9 +4,9 @@ function windowResized() {
 }
 
 function setColor(pos) {
-  let r = map(pos.x, 0, windowWidth, 50, 255)
-  let g = map(pos.y, 0, windowHeight, 255, 50)
-  let b = map(pos.x, 0, windowWidth, 50, 255)
+  let r = map(mouseX, 0, windowWidth, 50, 255)
+  let g = map(mouseY, 0, windowHeight, 255, 50)
+  let b = map(mouseX, 0, windowWidth, 50, 255)
   fill(r,g,b)
 
 }
