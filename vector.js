@@ -1,12 +1,14 @@
+const MIN_LIFESPAN = 10
 const MAX_LIFESPAN = 100
+
 
 function Vector(x, y) {
     this.pos = createVector(x, y);
-    this.speed = 1
-    this.lifespan = random(10,MAX_LIFESPAN)
-    
+    this.lifespan = random(MIN_LIFESPAN,MAX_LIFESPAN)
+
+
     this.show = function () {
-        ellipse(this.pos.x, this.pos.y, 1)
+        point(this.pos.x, this.pos.y)
         this.lifespan -= 0.2
     }
 
