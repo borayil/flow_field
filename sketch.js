@@ -1,5 +1,6 @@
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
+  background(35);
 }
 
 function setColor(pos) {
