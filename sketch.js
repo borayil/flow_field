@@ -24,7 +24,7 @@ function setup() {
   noiseDetail(1)
   
   // Grid params
-  var density = 50
+  var density = 100
   var spacing = windowWidth / density
 
   // Init vectors and grid
@@ -45,16 +45,24 @@ function draw() {
     
     // Angle between Perlin noise field and vector
     let angle = map(noise(v.pos.x*ANGLE_CHANGE_SCALE, v.pos.y*ANGLE_CHANGE_SCALE), 0, 1, 0, 720)
+
     // Angle between vector and mouse
-    
-    let angle_mouse = atan2((v.pos.y - mouseY), (v.pos.x - mouseX)) * 180 / TWO_PI 
+    let angle_mouse = atan2((v.pos.y - mouseY), (v.pos.x - mouseX)) * 180 / PI 
+
+    // Add (or sub) 90 deg to this angle
+    angle_mouse -= 270
+
+
     
     let field_force = createVector(cos(angle), sin(angle))
     let mouse_force = createVector(cos(angle_mouse), sin(angle_mouse))
 
-    // Apply the force here to vector
+    // Weigh movement by the inverse of the distance between vector particle and rotator point
+    
+    // Distance to rotator point (mouse)
     let dist_mouse = v.pos.dist(mouse_force)
-    let dist_field = v.pos.dist(field_force)
+    mouse_force.mult((1 + 1/dist_mouse) * 20)
+  
 
     v.pos.add(mouse_force)
     
