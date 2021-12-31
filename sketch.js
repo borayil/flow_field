@@ -1,6 +1,6 @@
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  background(35);
+  background(20);
 }
 
 function setColor(v) {
