@@ -60,7 +60,7 @@ function setup() {
   background(35);
   angleMode(DEGREES)
   noiseDetail(0.05)
-  strokeWeight(2)
+  strokeWeight(1)
 
   
   // Grid params
